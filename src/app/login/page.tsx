@@ -49,7 +49,7 @@ export default function LoginPage() {
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // Redirect to dashboard after successful login
-      router.push("/dashboard")
+      router.push("/chat")
     } catch (error) {
       console.error("Error during login:", error)
     } finally {
