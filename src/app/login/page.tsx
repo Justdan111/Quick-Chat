@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
+import { emailLogin, signup } from "./actions"
 
 const formSchema = z.object({
   emailOrUsername: z.string().min(1, {
@@ -38,54 +39,20 @@ export default function LoginPage() {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-
-    try {
-      // Here you would integrate with your authentication service
-      console.log(values)
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Redirect to dashboard after successful login
-      router.push("/chat")
-    } catch (error) {
-      console.error("Error during login:", error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  async function handleGoogleLogin() {
-    setIsGoogleLoading(true)
-
-    try {
-      // Here you would integrate with Google authentication
-      console.log("Google login initiated")
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Redirect to dashboard after successful login
-      router.push("/chat")
-    } catch (error) {
-      console.error("Error during Google login:", error)
-    } finally {
-      setIsGoogleLoading(false)
-    }
-  }
+ 
+     
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+       <Form {...form}>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Login</CardTitle>
           <CardDescription className="text-center">Enter your credentials to access your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+         
+            <form action={emailLogin} className="space-y-4">
               <FormField
                 control={form.control}
                 name="emailOrUsername"
@@ -134,7 +101,7 @@ export default function LoginPage() {
                   Forgot password?
                 </Link>
               </div>
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button  formAction={emailLogin} className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -145,7 +112,7 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
-          </Form>
+        
 
           <div className="mt-6">
             <div className="relative">
@@ -161,7 +128,7 @@ export default function LoginPage() {
               variant="outline"
               type="button"
               className="mt-4 w-full"
-              onClick={handleGoogleLogin}
+              
               disabled={isGoogleLoading}
             >
               {isGoogleLoading ? (
@@ -176,13 +143,32 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-primary underline underline-offset-4 hover:text-primary/90">
+            <Button formAction={signup} className="text-white underline underline-offset-4 ">
               Sign up
-            </Link>
+            </Button>
           </p>
+          
         </CardFooter>
       </Card>
+      </Form>
     </div>
   )
 }
 
+
+// import { emailLogin, signup } from './actions'
+
+// export default function LoginPage() {
+//   return (
+//     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+//     <form className='flex items-center'>
+//       <label htmlFor="email">Email:</label>
+//       <input id="email" name="email" type="email" required />
+//       <label htmlFor="password">Password:</label>
+//       <input id="password" name="password" type="password" required />
+//       <button formAction={emailLogin} className='text-blue-500 mr-5'>Log in</button>
+//       <button formAction={signup}>Sign up</button>
+//     </form>
+//     </div>
+//   )
+// }

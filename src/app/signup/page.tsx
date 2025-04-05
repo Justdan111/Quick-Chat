@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 import { Eye, EyeOff, CheckCircle2, XCircle } from 'lucide-react'
+import { signup } from "../login/actions"
 
 const formSchema = z.object({
   fullName: z.string().min(2, {
@@ -56,10 +57,10 @@ export default function SignupPage() {
       password: "",
       confirmPassword: "",
     },
-    mode: "onChange", // Enable validation as the user types
+    mode: "onChange", 
   })
 
-  // Watch password and confirmPassword fields for real-time validation
+
   const password = form.watch("password")
   const confirmPassword = form.watch("confirmPassword")
   const [passwordsMatch, setPasswordsMatch] = useState<boolean | null>(null)
@@ -73,24 +74,7 @@ export default function SignupPage() {
     }
   }, [password, confirmPassword])
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true)
-
-    try {
-      // Here you would integrate with your authentication service
-      console.log(values)
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Redirect to dashboard or login page after successful signup
-      router.push("/chat")
-    } catch (error) {
-      console.error("Error during signup:", error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+ 
 
   async function handleGoogleSignup() {
     setIsGoogleLoading(true)
@@ -120,7 +104,7 @@ export default function SignupPage() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form  className="space-y-4">
               <FormField
                 control={form.control}
                 name="fullName"
@@ -245,7 +229,7 @@ export default function SignupPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full" disabled={isLoading}>
+              <Button formAction={signup} className="w-full" disabled={isLoading}>
                 {isLoading ? (
                   <>
                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
