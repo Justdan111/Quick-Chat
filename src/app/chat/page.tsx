@@ -1,14 +1,14 @@
-import React from 'react'
+import { Button } from '@/components/ui/button'
+import React, { useState } from 'react'
 
 export default function page() {
+  const [chat, setChat] = useState()
   return (
-    <div>
-      <h1>Chat</h1>
-      <p>This is the chat page.</p>
-      <p>More content can be added here.</p>
-      <p>Feel free to customize this page as needed.</p>
-      <p>Enjoy chatting!</p>
-      <p>Have a great day!</p>
+    <div className='flex mx-auto items-center '>
+       <div>
+        <Button variant="default" >New chat</Button>
+
+       </div>
     </div>
   )
 }
