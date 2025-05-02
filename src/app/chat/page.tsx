@@ -7,7 +7,7 @@ export default function page() {
     <div className='flex mx-auto items-center '>
        <div>
         <Button variant="default" >New chat</Button>
-
+         <h1>Welcome to slime chat</h1>
 
        </div>
     </div>
